@@ -1,0 +1,40 @@
+flowchart LR
+
+    Cliente(["👤 Cliente FinTech Nova<br/>App Móvil / Navegador"]):::actor
+
+    subgraph Internet["🌐 Internet (Red Pública)"]
+        Canal["🔐 HTTPS / TLS 1.3<br/>Acceso público Codespace"]:::network
+    end
+
+    subgraph Azure["☁️ Microsoft Azure (GitHub Codespaces)"]
+
+        subgraph Contenedor["🐳 Contenedor Linux efímero<br/>VS Code Server"]
+            
+            APP["🚀 FastAPI + Uvicorn<br/>Puerto 8000"]:::app
+
+            subgraph Endpoints["📡 Endpoints API"]
+                EP1["POST /evaluar-riesgo<br/>✅ Scoring crediticio"]:::endpoint_safe
+                EP2["GET /status<br/>🩺 Health Check"]:::endpoint_monitor
+                EP3["GET /datos-financieros/{id}<br/>⚠️ Vulnerable (sin auth)"]:::endpoint_vuln
+            end
+        end
+    end
+
+    Cliente -->|"📤 Request HTTPS (JSON)"| Canal
+    Canal -->|"➡️ Proxy interno"| APP
+
+    APP --> EP1
+    APP --> EP2
+    APP --> EP3
+
+    EP1 -->|"📥 JSON {resultado}"| Cliente
+    EP2 -->|"📥 JSON {status}"| Cliente
+    EP3 -->|"📥 JSON ⚠️ datos expuestos"| Cliente
+
+    classDef actor fill:#EBF5FB,stroke:#1A5C9A,stroke-width:2px,color:#0D2B55
+    classDef network fill:#F4F6F7,stroke:#7B7D7D,stroke-width:1.5px,color:#2C3E50
+    classDef app fill:#E8F8F5,stroke:#16A085,stroke-width:2px,color:#0E6655
+
+    classDef endpoint_safe fill:#D6EAF8,stroke:#1A5C9A,stroke-width:2px,color:#154360
+    classDef endpoint_monitor fill:#D5F5E3,stroke:#239B56,stroke-width:2px,color:#145A32
+    classDef endpoint_vuln fill:#FADBD8,stroke:#C0392B,stroke-width:3px,color:#922B21

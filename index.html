@@ -4,105 +4,413 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kvmily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg:            #070402;
+      --brown-deep:    #140801;
+      --brown-mid:     #361606;
+      --brown-warm:    #6e3210;
+      --gold:          #c07530;
+      --gold-light:    #e6ac60;
+      --gold-pale:     #f5d898;
+      --cream:         #ddc8a8;
+      --text-body:     #a07848;
+      --text-dim:      #3e2010;
+      --card:          #0d0603;
+      --border-dark:   #220e04;
+      --border-mid:    #3e1a08;
+      --border-dash:   #5a2a10;
     }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Georgia', serif;
-      background-color: #faf9f7;
-      color: #2c2c2c;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg);
+      color: var(--cream);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--brown-mid); border-radius: 3px; }
+
+    /* ── HEADER ── */
     header {
-      padding: 40px 60px;
+      text-align: center;
+      padding: 110px 40px 80px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #1c0902 0%, var(--bg) 100%);
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(110,50,16,0.30) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .site-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      line-height: 1;
+      background: linear-gradient(140deg, #8c5020 0%, #d4924a 30%, #f5d898 55%, #d4924a 75%, #8c5020 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .site-divider {
+      margin: 24px auto;
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      position: relative;
+    }
+
+    .site-divider::before {
+      content: '✦';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--gold);
+      font-size: 0.65rem;
+      background: var(--bg);
+      padding: 0 8px;
+      background: linear-gradient(180deg, #1c0902, var(--bg));
+    }
+
+    .site-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    /* ── ACCORDION ── */
+    .accordion {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 10px 20px 80px;
+    }
+
+    .month-block {
+      margin-bottom: 8px;
+      border: 1px solid var(--border-mid);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    /* Month toggle button */
+    .month-toggle {
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      padding: 20px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #e8e4df;
+      background: linear-gradient(90deg,
+        var(--brown-deep) 0%,
+        var(--brown-mid) 30%,
+        #4a2010 50%,
+        var(--brown-mid) 70%,
+        var(--brown-deep) 100%
+      );
+      transition: filter 0.2s;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      letter-spacing: 0.15em;
-      font-weight: normal;
+    .month-toggle:hover { filter: brightness(1.25); }
+
+    .month-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
+      color: var(--gold-light);
     }
 
-    nav a {
-      text-decoration: none;
-      color: #2c2c2c;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-left: 32px;
-    }
-
-    nav a:hover {
-      opacity: 0.5;
-    }
-
-    main {
-      flex: 1;
+    .month-right {
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 60px;
+      gap: 20px;
+      color: var(--text-dim);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
     }
 
-    .hero h1 {
-      font-size: 5rem;
-      letter-spacing: 0.2em;
-      font-weight: normal;
+    .month-arrow {
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg);
+      transition: transform 0.3s ease;
+      position: relative;
+      top: -2px;
+      flex-shrink: 0;
+    }
+
+    .month-block.open .month-arrow {
+      transform: rotate(-135deg);
+      top: 2px;
+    }
+
+    /* Days grid panel */
+    .days-panel {
+      display: none;
+      background: #0a0502;
+      padding: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .month-block.open .days-panel {
+      display: grid;
+    }
+
+    /* ── DAY CARD (desprendible) ── */
+    .day-card {
+      background: var(--card);
+      border: 1px solid var(--border-mid);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .day-card:hover {
+      border-color: var(--brown-warm);
+      transform: translateY(-1px);
+    }
+
+    /* Perforated top strip */
+    .day-perf {
+      height: 5px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 4px,
+        var(--border-dash) 4px,
+        var(--border-dash) 9px
+      );
+    }
+
+    .day-inner { padding: 14px; }
+
+    .day-label {
+      font-size: 0.63rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #1a1a1a;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    .hero p {
-      margin-top: 20px;
-      font-size: 1rem;
-      letter-spacing: 0.08em;
-      color: #888;
+    /* Image slot */
+    .img-slot {
+      width: 100%;
+      height: 144px;
+      border: 1px dashed var(--border-dash);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      background: #060302;
+      color: var(--text-dim);
+      font-size: 0.64rem;
+      letter-spacing: 0.1em;
+      transition: border-color 0.2s;
     }
 
+    .img-slot:hover { border-color: var(--brown-warm); }
+
+    .img-slot svg { opacity: 0.25; }
+
+    /* Note text */
+    .note-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+      margin-bottom: 10px;
+    }
+
+    .note-area {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--text-body);
+      min-height: 52px;
+    }
+
+    /* Music slot */
+    .music-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+      margin: 10px 0;
+    }
+
+    .music-slot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+    }
+
+    .music-slot svg { flex-shrink: 0; opacity: 0.4; }
+
+    /* ── FOOTER ── */
     footer {
-      padding: 30px 60px;
       text-align: center;
-      border-top: 1px solid #e8e4df;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      color: #aaa;
+      padding: 36px 40px;
+      border-top: 1px solid var(--border-mid);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .days-panel { grid-template-columns: 1fr; }
+      .month-toggle { padding: 16px 20px; }
+      .accordion { padding: 10px 12px 60px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Kvmily</div>
-    <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Nosotros</a>
-      <a href="#">Contacto</a>
-    </nav>
-  </header>
+<header>
+  <h1 class="site-title">Kvmily</h1>
+  <div class="site-divider"></div>
+  <p class="site-sub">365 días &nbsp;·&nbsp; 365 momentos</p>
+</header>
 
-  <main>
-    <div class="hero">
-      <h1>Kvmily</h1>
-      <p>— coming soon —</p>
-    </div>
-  </main>
+<main class="accordion" id="accordion"></main>
 
-  <footer>
-    &copy; 2026 Kvmily. Todos los derechos reservados.
-  </footer>
+<footer>
+  &copy; 2026 Kvmily &nbsp;·&nbsp; Hecho con amor
+</footer>
+
+<script>
+  const months = [
+    { name: "Enero",      days: 31 },
+    { name: "Febrero",    days: 28 },
+    { name: "Marzo",      days: 31 },
+    { name: "Abril",      days: 30 },
+    { name: "Mayo",       days: 31 },
+    { name: "Junio",      days: 30 },
+    { name: "Julio",      days: 31 },
+    { name: "Agosto",     days: 31 },
+    { name: "Septiembre", days: 30 },
+    { name: "Octubre",    days: 31 },
+    { name: "Noviembre",  days: 30 },
+    { name: "Diciembre",  days: 31 }
+  ];
+
+  const accordion = document.getElementById('accordion');
+
+  months.forEach((month, mIdx) => {
+    const block = document.createElement('div');
+    block.className = 'month-block';
+
+    const btn = document.createElement('button');
+    btn.className = 'month-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = `
+      <span class="month-label">${month.name}</span>
+      <span class="month-right">
+        <span>${month.days} días</span>
+        <span class="month-arrow"></span>
+      </span>
+    `;
+
+    const panel = document.createElement('div');
+    panel.className = 'days-panel';
+    let rendered = false;
+
+    btn.addEventListener('click', () => {
+      const isOpen = block.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+      if (isOpen && !rendered) {
+        renderDays(panel, month, mIdx + 1);
+        rendered = true;
+      }
+    });
+
+    block.appendChild(btn);
+    block.appendChild(panel);
+    accordion.appendChild(block);
+  });
+
+  function renderDays(panel, month, monthNum) {
+    const frag = document.createDocumentFragment();
+
+    for (let d = 1; d <= month.days; d++) {
+      const card = document.createElement('div');
+      card.className = 'day-card';
+      card.innerHTML = `
+        <div class="day-perf"></div>
+        <div class="day-inner">
+          <div class="day-label">
+            <span>${d} de ${month.name}</span>
+            <span>Día ${globalDay(monthNum, d)}</span>
+          </div>
+          <div class="img-slot">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Imagen</span>
+          </div>
+          <div class="note-sep"></div>
+          <div class="note-area">—</div>
+          <div class="music-sep"></div>
+          <div class="music-slot">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="9" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+              <polyline points="12 18 12 8 21 6 21 16"/>
+            </svg>
+            <span>Música</span>
+          </div>
+        </div>
+      `;
+      frag.appendChild(card);
+    }
+
+    panel.appendChild(frag);
+  }
+
+  const dayOffsets = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+
+  function globalDay(monthNum, day) {
+    return dayOffsets[monthNum - 1] + day;
+  }
+</script>
 
 </body>
 </html>

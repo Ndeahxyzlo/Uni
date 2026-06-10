@@ -5,102 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kvmily · 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset ── */
+
+    /* ── Reset ───────────────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
-    /* ── Base ── */
     body {
       font-family: 'Montserrat', sans-serif;
       background: #0a0704;
-      color: #c9a882;
+      color: #b89068;
       min-height: 100vh;
     }
-
+    img { max-width: 100%; display: block; }
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #0a0704; }
-    ::-webkit-scrollbar-thumb { background: #3e1e0c; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: #3e1e0c; border-radius: 4px; }
 
-    /* ── Header ── */
+    /* ── Nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 58px;
+      background: rgba(8, 4, 2, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #1e0e06;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.3rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #a06030, #e0a860, #a06030);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #4a2810;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #c8a060; }
+
+    /* ── Hero ────────────────────────────────────────── */
     header {
+      padding: 140px 40px 90px;
       text-align: center;
-      padding: 90px 40px 70px;
-      background: linear-gradient(180deg, #1c0a03 0%, #0a0704 100%);
       position: relative;
       overflow: hidden;
+      background: linear-gradient(180deg, #1a0802 0%, #0a0704 100%);
     }
 
     header::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 55% at 50% 0%, rgba(100,45,12,0.28) 0%, transparent 70%);
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(100,42,10,0.30) 0%, transparent 70%);
     }
 
-    .logo {
+    .hero-title {
       position: relative;
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(3.5rem, 8vw, 6.5rem);
-      letter-spacing: 0.4em;
+      font-size: clamp(4rem, 10vw, 7.5rem);
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      background: linear-gradient(145deg, #8c4e1c 0%, #d4904a 30%, #f5d898 55%, #c87838 80%, #8c4e1c 100%);
+      line-height: 1;
+      background: linear-gradient(150deg, #7a3c18 0%, #cc8840 28%, #f0d090 52%, #cc8840 74%, #7a3c18 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .divider {
-      width: 100px;
+    .hero-line {
+      width: 110px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, #8c4e1c, transparent);
-      margin: 22px auto;
+      background: linear-gradient(90deg, transparent, #7a3c18, transparent);
+      margin: 26px auto;
       position: relative;
     }
 
-    .divider::after {
+    .hero-line::after {
       content: '✦';
       position: absolute;
-      left: 50%;
-      top: 50%;
+      left: 50%; top: 50%;
       transform: translate(-50%, -50%);
-      color: #8c4e1c;
-      font-size: 0.6rem;
+      color: #7a3c18;
+      font-size: 0.58rem;
       background: #0a0704;
       padding: 0 10px;
     }
 
-    .tagline {
+    .hero-sub {
       position: relative;
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
-      color: #4a2810;
+      font-size: 0.68rem;
+      letter-spacing: 0.38em;
+      color: #3a1a08;
       text-transform: uppercase;
     }
 
-    /* ── Main wrapper ── */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 10px 20px 80px;
+    /* ── Section wrapper ─────────────────────────────── */
+    section {
+      padding: 80px 48px 90px;
+      scroll-margin-top: 58px;
     }
 
-    /* ── Month accordion (details/summary) ── */
-    .month {
+    section:nth-child(even) { background: #080503; }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: #4a2810;
       margin-bottom: 10px;
-      border: 1px solid #2e1208;
+    }
+
+    .sec-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: 0.08em;
+      color: #d4a060;
+      margin-bottom: 44px;
+    }
+
+    /* ── Calendario ──────────────────────────────────── */
+    .accordion-wrap {
+      max-width: 820px;
+    }
+
+    .month {
+      margin-bottom: 8px;
+      border: 1px solid #1e0e06;
       border-radius: 4px;
       overflow: hidden;
     }
 
     .month summary {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 20px 28px;
-      background: linear-gradient(90deg, #130800 0%, #3a1608 40%, #3a1608 60%, #130800 100%);
+      gap: 24px;
+      padding: 18px 28px;
+      background: linear-gradient(90deg, #110700 0%, #321408 40%, #321408 60%, #110700 100%);
       cursor: pointer;
       list-style: none;
       user-select: none;
@@ -108,49 +175,43 @@
     }
 
     .month summary::-webkit-details-marker { display: none; }
-    .month summary:hover { filter: brightness(1.3); }
+    .month summary:hover { filter: brightness(1.35); }
 
-    .month-name {
+    .month-num {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: 1.1rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: #e0b070;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: #d4904a;
+      min-width: 52px;
+      line-height: 1;
     }
 
-    .month-right {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: #3e2010;
+    .month-info {
+      flex: 1;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: #3a1808;
+      text-transform: uppercase;
     }
 
     .arrow {
-      width: 8px;
-      height: 8px;
-      border-right: 1.5px solid #a06830;
-      border-bottom: 1.5px solid #a06830;
+      width: 8px; height: 8px;
+      border-right: 1px solid #7a4020;
+      border-bottom: 1px solid #7a4020;
       transform: rotate(45deg);
       transition: transform 0.3s;
-      position: relative;
-      top: -2px;
+      position: relative; top: -2px;
+      flex-shrink: 0;
     }
 
-    .month[open] .arrow {
-      transform: rotate(-135deg);
-      top: 3px;
-    }
+    .month[open] .arrow { transform: rotate(-135deg); top: 3px; }
 
-    /* ── Days panel ── */
     .days-panel {
-      background: #080503;
-      padding: 16px 14px 20px;
+      background: #070403;
+      padding: 14px 16px 18px;
     }
 
-    /* Day of week headers */
     .day-headers {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -160,320 +221,691 @@
 
     .dh {
       text-align: center;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      color: #3e2010;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: #2e1408;
       padding: 4px 0;
     }
 
-    /* Day grid */
     .day-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 3px;
     }
 
-    /* Empty cell */
     .e { aspect-ratio: 1; }
 
-    /* Day cell */
     .d {
       aspect-ratio: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid #1e0e06;
+      border: 1px solid #1a0a04;
       border-radius: 3px;
-      font-size: 0.72rem;
-      color: #7a5030;
-      cursor: default;
+      font-size: 0.7rem;
+      color: #5a3018;
       background: #0c0603;
-      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      cursor: default;
+      transition: all 0.15s;
       position: relative;
     }
 
     .d:hover {
       border-color: #6a3818;
-      background: #110804;
+      background: #120806;
       color: #d4904a;
     }
 
-    /* Perforated top on each day */
     .d::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 3px;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent 0px, transparent 3px,
-        #1e0e06 3px, #1e0e06 6px
-      );
+      height: 2px;
+      background: repeating-linear-gradient(90deg, transparent 0px, transparent 3px, #1a0a04 3px, #1a0a04 6px);
     }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 32px 20px;
-      border-top: 1px solid #1e0e06;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      color: #2e1408;
+    /* ── Dedicatorias ────────────────────────────────── */
+    .ded-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .ded-card {
+      border: 1px solid #2a1208;
+      border-radius: 4px;
+      padding: 32px 28px;
+      background: #0c0603;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ded-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #6a3018, transparent);
+    }
+
+    .ded-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #7a4020;
+      margin-bottom: 14px;
+    }
+
+    .ded-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: #d4a060;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .ded-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #7a5030;
+    }
+
+    .ded-from {
+      margin-top: 20px;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: #4a2810;
       text-transform: uppercase;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 500px) {
-      header { padding: 60px 20px 50px; }
-      .month summary { padding: 16px 18px; }
-      .days-panel { padding: 10px 8px 14px; }
-      .d { font-size: 0.62rem; }
+    /* ── Canciones ───────────────────────────────────── */
+    .songs-wrap {
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
+
+    .song-card {
+      border: 1px solid #2a1208;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #0c0603;
+    }
+
+    .song-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+    }
+
+    .song-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #3a1808;
+      min-width: 28px;
+    }
+
+    .song-info { flex: 1; }
+
+    .song-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: #c8904a;
+      margin-bottom: 2px;
+    }
+
+    .song-artist {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: #4a2810;
+    }
+
+    .song-embed {
+      /* Spotify iframe goes here — no extra styling needed */
+    }
+
+    /* Placeholder para canciones sin embed aún */
+    .song-placeholder {
+      height: 52px;
+      background: #080402;
+      border-top: 1px solid #1a0a04;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: #2a1208;
+    }
+
+    /* ── Galería ─────────────────────────────────────── */
+    .gal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .gal-item {
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: #0c0603;
+      border: 1px solid #2a1208;
+      position: relative;
+    }
+
+    .gal-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s, opacity 0.3s;
+    }
+
+    .gal-item:hover img { transform: scale(1.04); opacity: 0.88; }
+
+    .gal-item figcaption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 10px 12px;
+      background: linear-gradient(transparent, rgba(5,2,1,0.85));
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: #b89060;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .gal-item:hover figcaption { opacity: 1; }
+
+    /* Slot vacío para imagen */
+    .gal-empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: #2a1208;
+      text-transform: uppercase;
+      border: 1px dashed #1e0e06;
+      border-radius: 3px;
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 38px 40px;
+      border-top: 1px solid #1a0a04;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: #2a1208;
+      text-transform: uppercase;
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 0.6rem; letter-spacing: 0.12em; }
+      header { padding: 110px 24px 70px; }
+      section { padding: 60px 20px 70px; }
+      .ded-grid { grid-template-columns: 1fr; }
+      .gal-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
   </style>
 </head>
 <body>
 
-<header>
-  <h1 class="logo">Kvmily</h1>
-  <div class="divider"></div>
-  <p class="tagline">365 días · 365 momentos · 2026</p>
+<!-- ── NAVEGACIÓN ─────────────────────────────────────────── -->
+<nav>
+  <a href="#inicio" class="nav-logo">Kvmily</a>
+  <ul class="nav-links">
+    <li><a href="#calendario">Calendario</a></li>
+    <li><a href="#dedicatorias">Dedicatorias</a></li>
+    <li><a href="#canciones">Canciones</a></li>
+    <li><a href="#galeria">Galería</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<header id="inicio">
+  <h1 class="hero-title">Kvmily</h1>
+  <div class="hero-line"></div>
+  <p class="hero-sub">365 días &nbsp;·&nbsp; 2026</p>
 </header>
 
-<main>
+<!-- ── CALENDARIO ────────────────────────────────────────── -->
+<section id="calendario">
+  <p class="sec-title">Sección 01</p>
+  <h2 class="sec-heading">Calendario</h2>
 
-  <!-- ── ENERO ── offset: 3 (jueves), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Enero</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
-        <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
-        <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
-        <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
-        <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+  <div class="accordion-wrap">
+
+    <!-- 01 — Enero · offset 3 (jue) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">01</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
+          <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
+          <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
+          <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
+          <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 02 — Febrero · offset 6 (dom) · 28 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">02</span>
+        <span class="month-info">28 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div>
+          <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+          <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+          <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+          <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 03 — Marzo · offset 6 (dom) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">03</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div>
+          <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+          <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+          <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+          <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
+          <div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 04 — Abril · offset 2 (mié) · 30 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">04</span>
+        <span class="month-info">30 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
+          <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
+          <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+          <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+          <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 05 — Mayo · offset 4 (vie) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">05</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div>
+          <div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div>
+          <div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div>
+          <div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div>
+          <div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 06 — Junio · offset 0 (lun) · 30 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">06</span>
+        <span class="month-info">30 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div>
+          <div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div>
+          <div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div>
+          <div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
+          <div class="d">29</div><div class="d">30</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 07 — Julio · offset 2 (mié) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">07</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
+          <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
+          <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+          <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+          <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 08 — Agosto · offset 5 (sáb) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">08</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div>
+          <div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div>
+          <div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div>
+          <div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div>
+          <div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
+          <div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 09 — Septiembre · offset 1 (mar) · 30 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">09</span>
+        <span class="month-info">30 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
+          <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
+          <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
+          <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
+          <div class="d">28</div><div class="d">29</div><div class="d">30</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 10 — Octubre · offset 3 (jue) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">10</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
+          <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
+          <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
+          <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
+          <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 11 — Noviembre · offset 6 (dom) · 30 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">11</span>
+        <span class="month-info">30 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+          <div class="d">1</div>
+          <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+          <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+          <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+          <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
+          <div class="d">30</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 12 — Diciembre · offset 1 (mar) · 31 días -->
+    <details class="month">
+      <summary>
+        <span class="month-num">12</span>
+        <span class="month-info">31 días</span>
+        <span class="arrow"></span>
+      </summary>
+      <div class="days-panel">
+        <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+        <div class="day-grid">
+          <div class="e"></div>
+          <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
+          <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
+          <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
+          <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
+          <div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /.accordion-wrap -->
+</section>
+
+<!-- ── DEDICATORIAS ───────────────────────────────────────── -->
+<section id="dedicatorias">
+  <p class="sec-title">Sección 02</p>
+  <h2 class="sec-heading">Dedicatorias</h2>
+
+  <div class="ded-grid">
+
+    <!-- Dedicatoria 1 — reemplaza el texto con el tuyo -->
+    <div class="ded-card">
+      <p class="ded-tag">Para ti</p>
+      <h3 class="ded-title">Título de la dedicatoria</h3>
+      <p class="ded-text">
+        Escribe aquí tu dedicatoria. Puede ser tan larga o corta como quieras.
+        Este espacio es tuyo para guardar lo que sientes.
+      </p>
+      <p class="ded-from">— de tu nombre</p>
+    </div>
+
+    <!-- Dedicatoria 2 -->
+    <div class="ded-card">
+      <p class="ded-tag">Para el futuro</p>
+      <h3 class="ded-title">Título de la dedicatoria</h3>
+      <p class="ded-text">
+        Escribe aquí tu dedicatoria. Puede ser tan larga o corta como quieras.
+        Este espacio es tuyo para guardar lo que sientes.
+      </p>
+      <p class="ded-from">— de tu nombre</p>
+    </div>
+
+    <!-- Dedicatoria 3 -->
+    <div class="ded-card">
+      <p class="ded-tag">Para siempre</p>
+      <h3 class="ded-title">Título de la dedicatoria</h3>
+      <p class="ded-text">
+        Escribe aquí tu dedicatoria. Puede ser tan larga o corta como quieras.
+        Este espacio es tuyo para guardar lo que sientes.
+      </p>
+      <p class="ded-from">— de tu nombre</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CANCIONES ──────────────────────────────────────────── -->
+<section id="canciones">
+  <p class="sec-title">Sección 03</p>
+  <h2 class="sec-heading">Canciones</h2>
+
+  <div class="songs-wrap">
+
+    <!--
+      CÓMO AGREGAR UNA CANCIÓN DE SPOTIFY:
+      1. Abre Spotify → busca la canción
+      2. Clic derecho → Compartir → Copiar enlace de la canción
+      3. El link tiene este formato: https://open.spotify.com/track/XXXXXXXXXXXXXXXX
+      4. Copia el ID (lo que está después de /track/) y pégalo abajo donde dice ID_DE_LA_CANCION
+    -->
+
+    <!-- Canción 1 — reemplaza ID_DE_LA_CANCION con el ID real -->
+    <div class="song-card">
+      <div class="song-meta">
+        <span class="song-num">01</span>
+        <div class="song-info">
+          <div class="song-name">Nombre de la canción</div>
+          <div class="song-artist">Artista</div>
+        </div>
+      </div>
+      <div class="song-embed">
+        <!-- Pega el iframe de Spotify aquí. Ejemplo:
+        <iframe style="border-radius:0" src="https://open.spotify.com/embed/track/ID_DE_LA_CANCION?utm_source=generator&theme=0"
+          width="100%" height="80" frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+        </iframe>
+        -->
+        <div class="song-placeholder">Spotify embed aquí</div>
       </div>
     </div>
-  </details>
 
-  <!-- ── FEBRERO ── offset: 6 (domingo), 28 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Febrero</span>
-      <span class="month-right"><span>28 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div>
-        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
-        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
-        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
-        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
+    <!-- Canción 2 -->
+    <div class="song-card">
+      <div class="song-meta">
+        <span class="song-num">02</span>
+        <div class="song-info">
+          <div class="song-name">Nombre de la canción</div>
+          <div class="song-artist">Artista</div>
+        </div>
+      </div>
+      <div class="song-embed">
+        <div class="song-placeholder">Spotify embed aquí</div>
       </div>
     </div>
-  </details>
 
-  <!-- ── MARZO ── offset: 6 (domingo), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Marzo</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div>
-        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
-        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
-        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
-        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
-        <div class="d">30</div><div class="d">31</div>
+    <!-- Canción 3 -->
+    <div class="song-card">
+      <div class="song-meta">
+        <span class="song-num">03</span>
+        <div class="song-info">
+          <div class="song-name">Nombre de la canción</div>
+          <div class="song-artist">Artista</div>
+        </div>
+      </div>
+      <div class="song-embed">
+        <div class="song-placeholder">Spotify embed aquí</div>
       </div>
     </div>
-  </details>
 
-  <!-- ── ABRIL ── offset: 2 (miércoles), 30 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Abril</span>
-      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
-        <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
-        <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
-        <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
-        <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
+    <!-- Canción 4 -->
+    <div class="song-card">
+      <div class="song-meta">
+        <span class="song-num">04</span>
+        <div class="song-info">
+          <div class="song-name">Nombre de la canción</div>
+          <div class="song-artist">Artista</div>
+        </div>
+      </div>
+      <div class="song-embed">
+        <div class="song-placeholder">Spotify embed aquí</div>
       </div>
     </div>
-  </details>
 
-  <!-- ── MAYO ── offset: 4 (viernes), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Mayo</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div>
-        <div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div>
-        <div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div>
-        <div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div>
-        <div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
-      </div>
-    </div>
-  </details>
+  </div>
+</section>
 
-  <!-- ── JUNIO ── offset: 0 (lunes), 30 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Junio</span>
-      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div>
-        <div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div>
-        <div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div>
-        <div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
-        <div class="d">29</div><div class="d">30</div>
-      </div>
-    </div>
-  </details>
+<!-- ── GALERÍA ────────────────────────────────────────────── -->
+<section id="galeria">
+  <p class="sec-title">Sección 04</p>
+  <h2 class="sec-heading">Galería</h2>
 
-  <!-- ── JULIO ── offset: 2 (miércoles), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Julio</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
-        <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
-        <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
-        <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
-        <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
-      </div>
-    </div>
-  </details>
+  <!--
+    CÓMO AGREGAR IMÁGENES:
+    Opción A — imagen subida al repo: src="nombre-del-archivo.jpg"
+    Opción B — enlace directo de internet: src="https://..."
+    Reemplaza el atributo src y el texto del figcaption con los tuyos.
+  -->
 
-  <!-- ── AGOSTO ── offset: 5 (sábado), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Agosto</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div>
-        <div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div>
-        <div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div>
-        <div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div>
-        <div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
-        <div class="d">31</div>
-      </div>
-    </div>
-  </details>
+  <div class="gal-grid">
 
-  <!-- ── SEPTIEMBRE ── offset: 1 (martes), 30 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Septiembre</span>
-      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
-        <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
-        <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
-        <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
-        <div class="d">28</div><div class="d">29</div><div class="d">30</div>
-      </div>
-    </div>
-  </details>
+    <figure class="gal-item">
+      <!-- <img src="tu-imagen.jpg" alt="descripción" /> -->
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
 
-  <!-- ── OCTUBRE ── offset: 3 (jueves), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Octubre</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
-        <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
-        <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
-        <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
-        <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
-      </div>
-    </div>
-  </details>
+    <figure class="gal-item">
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
 
-  <!-- ── NOVIEMBRE ── offset: 6 (domingo), 30 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Noviembre</span>
-      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
-        <div class="d">1</div>
-        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
-        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
-        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
-        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
-        <div class="d">30</div>
-      </div>
-    </div>
-  </details>
+    <figure class="gal-item">
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
 
-  <!-- ── DICIEMBRE ── offset: 1 (martes), 31 días ── -->
-  <details class="month">
-    <summary>
-      <span class="month-name">Diciembre</span>
-      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
-    </summary>
-    <div class="days-panel">
-      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
-      <div class="day-grid">
-        <div class="e"></div>
-        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
-        <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
-        <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
-        <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
-        <div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
-      </div>
-    </div>
-  </details>
+    <figure class="gal-item">
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
 
-</main>
+    <figure class="gal-item">
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
 
+    <figure class="gal-item">
+      <div class="gal-empty">Imagen</div>
+      <figcaption>Descripción del recuerdo</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
 <footer>
   &copy; 2026 Kvmily &nbsp;·&nbsp; Hecho con amor
 </footer>

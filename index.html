@@ -3,301 +3,480 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kvmily</title>
+  <title>Kvmily · 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    /* ── Base ── */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0704;
+      color: #c9a882;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0a0704; }
+    ::-webkit-scrollbar-thumb { background: #3e1e0c; border-radius: 3px; }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      padding: 90px 40px 70px;
+      background: linear-gradient(180deg, #1c0a03 0%, #0a0704 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 55% at 50% 0%, rgba(100,45,12,0.28) 0%, transparent 70%);
+    }
+
+    .logo {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      background: linear-gradient(145deg, #8c4e1c 0%, #d4904a 30%, #f5d898 55%, #c87838 80%, #8c4e1c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .divider {
+      width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #8c4e1c, transparent);
+      margin: 22px auto;
+      position: relative;
+    }
+
+    .divider::after {
+      content: '✦';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #8c4e1c;
+      font-size: 0.6rem;
+      background: #0a0704;
+      padding: 0 10px;
+    }
+
+    .tagline {
+      position: relative;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: #4a2810;
+      text-transform: uppercase;
+    }
+
+    /* ── Main wrapper ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 10px 20px 80px;
+    }
+
+    /* ── Month accordion (details/summary) ── */
+    .month {
+      margin-bottom: 10px;
+      border: 1px solid #2e1208;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .month summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      background: linear-gradient(90deg, #130800 0%, #3a1608 40%, #3a1608 60%, #130800 100%);
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      transition: filter 0.2s;
+    }
+
+    .month summary::-webkit-details-marker { display: none; }
+    .month summary:hover { filter: brightness(1.3); }
+
+    .month-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #e0b070;
+    }
+
+    .month-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: #3e2010;
+    }
+
+    .arrow {
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid #a06830;
+      border-bottom: 1.5px solid #a06830;
+      transform: rotate(45deg);
+      transition: transform 0.3s;
+      position: relative;
+      top: -2px;
+    }
+
+    .month[open] .arrow {
+      transform: rotate(-135deg);
+      top: 3px;
+    }
+
+    /* ── Days panel ── */
+    .days-panel {
+      background: #080503;
+      padding: 16px 14px 20px;
+    }
+
+    /* Day of week headers */
+    .day-headers {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .dh {
+      text-align: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: #3e2010;
+      padding: 4px 0;
+    }
+
+    /* Day grid */
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    /* Empty cell */
+    .e { aspect-ratio: 1; }
+
+    /* Day cell */
+    .d {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1e0e06;
+      border-radius: 3px;
+      font-size: 0.72rem;
+      color: #7a5030;
+      cursor: default;
+      background: #0c0603;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      position: relative;
+    }
+
+    .d:hover {
+      border-color: #6a3818;
+      background: #110804;
+      color: #d4904a;
+    }
+
+    /* Perforated top on each day */
+    .d::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 3px,
+        #1e0e06 3px, #1e0e06 6px
+      );
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      border-top: 1px solid #1e0e06;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: #2e1408;
+      text-transform: uppercase;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      header { padding: 60px 20px 50px; }
+      .month summary { padding: 16px 18px; }
+      .days-panel { padding: 10px 8px 14px; }
+      .d { font-size: 0.62rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Loading -->
-<div id="loading-screen">
-  <div class="loading-inner">
-    <h1 class="loading-title">Kvmily</h1>
-    <div class="loading-bar"><div class="loading-fill"></div></div>
-  </div>
-</div>
+<header>
+  <h1 class="logo">Kvmily</h1>
+  <div class="divider"></div>
+  <p class="tagline">365 días · 365 momentos · 2026</p>
+</header>
 
-<!-- App -->
-<div id="app" class="hidden">
+<main>
 
-  <!-- Sidebar -->
-  <aside id="sidebar">
-    <div class="sidebar-top">
-      <div class="sb-logo">K</div>
-      <span class="sb-brand">Kvmily</span>
-    </div>
-    <nav class="sb-nav">
-      <button class="nav-btn active" data-section="dashboard">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-        <span>Inicio</span>
-      </button>
-      <button class="nav-btn" data-section="calendar">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        <span>Calendario</span>
-      </button>
-      <button class="nav-btn" data-section="feelings">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span>Sentimientos</span>
-      </button>
-      <button class="nav-btn" data-section="poems">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-        <span>Poemas</span>
-      </button>
-      <button class="nav-btn" data-section="dedications">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span>Dedicatorias</span>
-      </button>
-      <button class="nav-btn" data-section="gallery">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-        <span>Galería</span>
-      </button>
-      <button class="nav-btn" data-section="search">
-        <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span>Buscar</span>
-      </button>
-    </nav>
-    <div class="sb-foot">
-      <span class="year-chip" id="year-chip">2026</span>
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <main id="main">
-    <div id="toast" class="toast"></div>
-
-    <!-- DASHBOARD -->
-    <section id="sec-dashboard" class="sec active">
-      <div class="sec-head">
-        <div>
-          <h1 class="sec-title">Bienvenida</h1>
-          <p class="sec-sub" id="today-label"></p>
-        </div>
-        <div class="quote-pill glass" id="quote-pill"></div>
-      </div>
-      <div class="stats-row">
-        <div class="stat-card glass"><div class="stat-val" id="s-notes">0</div><div class="stat-lbl">Notas</div></div>
-        <div class="stat-card glass"><div class="stat-val" id="s-poems">0</div><div class="stat-lbl">Poemas</div></div>
-        <div class="stat-card glass"><div class="stat-val" id="s-favs">0</div><div class="stat-lbl">Favoritos</div></div>
-        <div class="stat-card glass"><div class="stat-val" id="s-photos">0</div><div class="stat-lbl">Fotos</div></div>
-      </div>
-      <div class="dash-grid">
-        <div class="dash-card glass"><h3 class="card-title">Últimas notas</h3><div id="d-notes"></div></div>
-        <div class="dash-card glass"><h3 class="card-title">Últimos poemas</h3><div id="d-poems"></div></div>
-        <div class="dash-card glass col-full"><h3 class="card-title">Línea del tiempo</h3><div class="tl-scroll"><div id="timeline"></div></div></div>
-        <div class="dash-card glass"><h3 class="card-title">Registro emocional</h3><div id="d-emotions"></div></div>
-        <div class="dash-card glass"><h3 class="card-title">Días especiales</h3><div id="d-specials"></div></div>
-      </div>
-    </section>
-
-    <!-- CALENDAR -->
-    <section id="sec-calendar" class="sec">
-      <div class="sec-head">
-        <h1 class="sec-title">Calendario</h1>
-        <div class="year-nav">
-          <button class="btn-ghost" id="prev-yr">‹</button>
-          <span class="year-lbl" id="cal-yr">2026</span>
-          <button class="btn-ghost" id="next-yr">›</button>
-        </div>
-      </div>
-      <div class="cal-legend">
-        <span><span class="ldot note-dot-c"></span> Nota escrita</span>
-        <span><span class="ldot fav-dot-c"></span> Favorito</span>
-        <span><span class="ldot today-dot-c"></span> Hoy</span>
-      </div>
-      <div id="cal-grid" class="cal-grid"></div>
-    </section>
-
-    <!-- FEELINGS -->
-    <section id="sec-feelings" class="sec">
-      <div class="sec-head">
-        <h1 class="sec-title">Sentimientos</h1>
-        <button class="btn-primary" id="btn-log">+ Registrar</button>
-      </div>
-      <div class="feelings-body">
-        <div class="glass feel-overview">
-          <h3 class="subsec-title">Distribución emocional</h3>
-          <div id="feel-chart"></div>
-        </div>
-        <div class="glass feel-history">
-          <h3 class="subsec-title">Historial</h3>
-          <div id="feel-list"></div>
-        </div>
-      </div>
-      <div id="feel-form" class="feel-form glass hidden">
-        <h3>¿Cómo te sientes?</h3>
-        <div id="feel-picker" class="emo-grid-lg"></div>
-        <textarea id="feel-text" class="field-ta" placeholder="Cuéntame más..." rows="3"></textarea>
-        <div class="form-btns">
-          <button class="btn-ghost" id="cancel-feel">Cancelar</button>
-          <button class="btn-primary" id="save-feel">Guardar</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- POEMS -->
-    <section id="sec-poems" class="sec">
-      <div class="sec-head">
-        <h1 class="sec-title">Poemas</h1>
-        <button class="btn-primary" id="btn-poem">+ Nuevo poema</button>
-      </div>
-      <div id="poems-grid" class="items-grid"></div>
-    </section>
-
-    <!-- DEDICATIONS -->
-    <section id="sec-dedications" class="sec">
-      <div class="sec-head">
-        <h1 class="sec-title">Dedicatorias</h1>
-        <button class="btn-primary" id="btn-ded">+ Nueva dedicatoria</button>
-      </div>
-      <div class="filter-row" id="ded-filters">
-        <button class="fchip active" data-cat="all">Todas</button>
-        <button class="fchip" data-cat="para-ti">Para Ti</button>
-        <button class="fchip" data-cat="para-mi">Para Mí</button>
-        <button class="fchip" data-cat="futuro">Futuro</button>
-        <button class="fchip" data-cat="pasado">Pasado</button>
-      </div>
-      <div id="deds-grid" class="items-grid"></div>
-    </section>
-
-    <!-- GALLERY -->
-    <section id="sec-gallery" class="sec">
-      <div class="sec-head">
-        <h1 class="sec-title">Galería de Recuerdos</h1>
-        <label class="btn-primary" for="gal-input">+ Agregar foto</label>
-        <input type="file" id="gal-input" accept="image/*" multiple class="hidden-inp" />
-      </div>
-      <div id="gal-grid" class="gal-grid"></div>
-    </section>
-
-    <!-- SEARCH -->
-    <section id="sec-search" class="sec">
-      <div class="sec-head"><h1 class="sec-title">Buscar</h1></div>
-      <div class="search-wrap glass">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-in" class="search-field" placeholder="Busca notas, poemas, dedicatorias..." />
-      </div>
-      <div id="search-out" class="search-results"></div>
-    </section>
-  </main>
-</div>
-
-<!-- ── MODALS ── -->
-
-<!-- Day Note -->
-<div id="modal-day" class="modal hidden">
-  <div class="mbg" data-close="modal-day"></div>
-  <div class="mbox glass-dark wide-modal">
-    <div class="mhead">
-      <div>
-        <div class="mmeta" id="day-meta"></div>
-        <input class="mtitle" id="day-title" placeholder="Título del día..." />
-      </div>
-      <div class="mactions">
-        <button class="fav-btn" id="day-fav">☆</button>
-        <button class="mx" data-close="modal-day">×</button>
+  <!-- ── ENERO ── offset: 3 (jueves), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Enero</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
+        <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
+        <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
+        <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
+        <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
       </div>
     </div>
-    <div class="emo-row" id="day-emo-row"></div>
-    <div class="editor-wrap">
-      <div class="editor-bar">
-        <button data-cmd="bold"><b>B</b></button>
-        <button data-cmd="italic"><i>I</i></button>
-        <button data-cmd="underline"><u>U</u></button>
-        <span class="bsep"></span>
-        <button data-cmd="h2">H₂</button>
-        <button data-cmd="blockquote">❝</button>
-        <button data-cmd="insertUnorderedList">⁃</button>
-      </div>
-      <div id="day-editor" class="day-editor" contenteditable="true" data-ph="Escribe sobre este día..."></div>
-    </div>
-    <div class="attach-bar">
-      <label class="attach-lbl" for="day-img">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg> Imagen
-      </label>
-      <input type="file" id="day-img" accept="image/*" class="hidden-inp" />
-      <div id="day-thumbs" class="thumb-row"></div>
-    </div>
-    <div class="mfoot">
-      <span class="hint" id="save-hint">—</span>
-      <button class="btn-primary" id="save-note">Guardar</button>
-    </div>
-  </div>
-</div>
+  </details>
 
-<!-- Poem -->
-<div id="modal-poem" class="modal hidden">
-  <div class="mbg" data-close="modal-poem"></div>
-  <div class="mbox glass-dark">
-    <div class="mhead">
-      <input class="mtitle" id="poem-title" placeholder="Título del poema..." />
-      <button class="mx" data-close="modal-poem">×</button>
-    </div>
-    <div class="meta-row">
-      <input type="date" id="poem-date" class="field-in" />
-      <input type="text" id="poem-tags" class="field-in" placeholder="Etiquetas: amor, nostalgia..." />
-    </div>
-    <textarea id="poem-body" class="poem-ta" rows="16" placeholder="Escribe tu poema..."></textarea>
-    <div class="mfoot">
-      <button class="btn-ghost" data-close="modal-poem">Cancelar</button>
-      <button class="btn-primary" id="save-poem">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Dedication -->
-<div id="modal-ded" class="modal hidden">
-  <div class="mbg" data-close="modal-ded"></div>
-  <div class="mbox glass-dark">
-    <div class="mhead">
-      <input class="mtitle" id="ded-title" placeholder="Título de la dedicatoria..." />
-      <button class="mx" data-close="modal-ded">×</button>
-    </div>
-    <div class="meta-row">
-      <select id="ded-cat" class="field-in">
-        <option value="para-ti">Para Ti</option>
-        <option value="para-mi">Para Mí</option>
-        <option value="futuro">Para el Futuro</option>
-        <option value="pasado">Para el Pasado</option>
-      </select>
-      <input type="text" id="ded-to" class="field-in" placeholder="Dedicado a..." />
-    </div>
-    <textarea id="ded-body" class="poem-ta" rows="14" placeholder="Escribe tu dedicatoria..."></textarea>
-    <div class="mfoot">
-      <button class="btn-ghost" data-close="modal-ded">Cancelar</button>
-      <button class="btn-primary" id="save-ded">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- View -->
-<div id="modal-view" class="modal hidden">
-  <div class="mbg" data-close="modal-view"></div>
-  <div class="mbox glass-dark view-mbox">
-    <div class="mhead">
-      <div><div class="mmeta" id="vm-meta"></div><h2 class="vm-title" id="vm-title"></h2></div>
-      <div class="mactions">
-        <button class="fav-btn" id="vm-fav">☆</button>
-        <button class="icon-btn" id="vm-edit">✎</button>
-        <button class="icon-btn danger" id="vm-del">✕</button>
-        <button class="mx" data-close="modal-view">×</button>
+  <!-- ── FEBRERO ── offset: 6 (domingo), 28 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Febrero</span>
+      <span class="month-right"><span>28 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div>
+        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
       </div>
     </div>
-    <div class="view-body" id="vm-body"></div>
-  </div>
-</div>
+  </details>
 
-<!-- Lightbox -->
-<div id="lightbox" class="modal hidden">
-  <div class="mbg" data-close="lightbox"></div>
-  <div class="lb-wrap">
-    <button class="mx lb-x" data-close="lightbox">×</button>
-    <img id="lb-img" src="" alt="" />
-    <p class="lb-cap" id="lb-cap"></p>
-  </div>
-</div>
+  <!-- ── MARZO ── offset: 6 (domingo), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Marzo</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div>
+        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
+        <div class="d">30</div><div class="d">31</div>
+      </div>
+    </div>
+  </details>
 
-<script src="app.js"></script>
+  <!-- ── ABRIL ── offset: 2 (miércoles), 30 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Abril</span>
+      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
+        <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
+        <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+        <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+        <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── MAYO ── offset: 4 (viernes), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Mayo</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div>
+        <div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div>
+        <div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div>
+        <div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div>
+        <div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── JUNIO ── offset: 0 (lunes), 30 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Junio</span>
+      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div>
+        <div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div>
+        <div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div>
+        <div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div>
+        <div class="d">29</div><div class="d">30</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── JULIO ── offset: 2 (miércoles), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Julio</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div>
+        <div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div>
+        <div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div>
+        <div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div>
+        <div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── AGOSTO ── offset: 5 (sábado), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Agosto</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div>
+        <div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div>
+        <div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div>
+        <div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div>
+        <div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div>
+        <div class="d">31</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── SEPTIEMBRE ── offset: 1 (martes), 30 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Septiembre</span>
+      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
+        <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
+        <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
+        <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
+        <div class="d">28</div><div class="d">29</div><div class="d">30</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── OCTUBRE ── offset: 3 (jueves), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Octubre</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div>
+        <div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div>
+        <div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div>
+        <div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div>
+        <div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── NOVIEMBRE ── offset: 6 (domingo), 30 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Noviembre</span>
+      <span class="month-right"><span>30 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div><div class="e"></div>
+        <div class="d">1</div>
+        <div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div><div class="d">7</div><div class="d">8</div>
+        <div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div><div class="d">15</div>
+        <div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div><div class="d">21</div><div class="d">22</div>
+        <div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div><div class="d">28</div><div class="d">29</div>
+        <div class="d">30</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- ── DICIEMBRE ── offset: 1 (martes), 31 días ── -->
+  <details class="month">
+    <summary>
+      <span class="month-name">Diciembre</span>
+      <span class="month-right"><span>31 días</span><span class="arrow"></span></span>
+    </summary>
+    <div class="days-panel">
+      <div class="day-headers"><div class="dh">L</div><div class="dh">M</div><div class="dh">M</div><div class="dh">J</div><div class="dh">V</div><div class="dh">S</div><div class="dh">D</div></div>
+      <div class="day-grid">
+        <div class="e"></div>
+        <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d">5</div><div class="d">6</div>
+        <div class="d">7</div><div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div>
+        <div class="d">14</div><div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d">20</div>
+        <div class="d">21</div><div class="d">22</div><div class="d">23</div><div class="d">24</div><div class="d">25</div><div class="d">26</div><div class="d">27</div>
+        <div class="d">28</div><div class="d">29</div><div class="d">30</div><div class="d">31</div>
+      </div>
+    </div>
+  </details>
+
+</main>
+
+<footer>
+  &copy; 2026 Kvmily &nbsp;·&nbsp; Hecho con amor
+</footer>
+
 </body>
 </html>

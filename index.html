@@ -13,14 +13,14 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: #0a0704;
+      background: #080705;
       color: #b89068;
       min-height: 100vh;
     }
     img { max-width: 100%; display: block; }
     ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #0a0704; }
-    ::-webkit-scrollbar-thumb { background: #3e1e0c; border-radius: 4px; }
+    ::-webkit-scrollbar-track { background: #080705; }
+    ::-webkit-scrollbar-thumb { background: #3a2e18; border-radius: 4px; }
 
     /* ── Nav ─────────────────────────────────────────── */
     nav {
@@ -32,9 +32,9 @@
       justify-content: space-between;
       padding: 0 48px;
       height: 58px;
-      background: rgba(8, 4, 2, 0.92);
+      background: rgba(6, 5, 3, 0.92);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid #1e0e06;
+      border-bottom: 1px solid #1e1a0e;
     }
 
     .nav-logo {
@@ -60,7 +60,7 @@
       font-size: 0.68rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #4a2810;
+      color: #483618;
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -73,13 +73,13 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, #1a0802 0%, #0a0704 100%);
+      background: linear-gradient(180deg, #141008 0%, #080705 100%);
     }
 
     header::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(100,42,10,0.30) 0%, transparent 70%);
+      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(90,65,20,0.30) 0%, transparent 70%);
     }
 
     .hero-title {
@@ -90,7 +90,7 @@
       letter-spacing: 0.45em;
       text-transform: uppercase;
       line-height: 1;
-      background: linear-gradient(150deg, #7a3c18 0%, #cc8840 28%, #f0d090 52%, #cc8840 74%, #7a3c18 100%);
+      background: linear-gradient(150deg, #785630 0%, #cc8840 28%, #f0d090 52%, #cc8840 74%, #785630 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -99,7 +99,7 @@
     .hero-line {
       width: 110px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, #7a3c18, transparent);
+      background: linear-gradient(90deg, transparent, #785630, transparent);
       margin: 26px auto;
       position: relative;
     }
@@ -109,9 +109,9 @@
       position: absolute;
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
-      color: #7a3c18;
+      color: #785630;
       font-size: 0.58rem;
-      background: #0a0704;
+      background: #080705;
       padding: 0 10px;
     }
 
@@ -119,7 +119,7 @@
       position: relative;
       font-size: 0.68rem;
       letter-spacing: 0.38em;
-      color: #3a1a08;
+      color: #382c14;
       text-transform: uppercase;
     }
 
@@ -129,7 +129,7 @@
       scroll-margin-top: 58px;
     }
 
-    section:nth-child(even) { background: #080503; }
+    section:nth-child(even) { background: #070604; }
 
     .sec-title {
       font-family: 'Cormorant Garamond', serif;
@@ -137,7 +137,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: #4a2810;
+      color: #483618;
       margin-bottom: 10px;
     }
 
@@ -157,7 +157,7 @@
 
     .month {
       margin-bottom: 8px;
-      border: 1px solid #1e0e06;
+      border: 1px solid #1e1a0e;
       border-radius: 4px;
       overflow: hidden;
     }
@@ -167,7 +167,7 @@
       align-items: center;
       gap: 24px;
       padding: 18px 28px;
-      background: linear-gradient(90deg, #110700 0%, #321408 40%, #321408 60%, #110700 100%);
+      background: linear-gradient(90deg, #0e0c06 0%, #302415 40%, #302415 60%, #0e0c06 100%);
       cursor: pointer;
       list-style: none;
       user-select: none;
@@ -191,14 +191,14 @@
       flex: 1;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      color: #3a1808;
+      color: #382c14;
       text-transform: uppercase;
     }
 
     .arrow {
       width: 8px; height: 8px;
-      border-right: 1px solid #7a4020;
-      border-bottom: 1px solid #7a4020;
+      border-right: 1px solid #785630;
+      border-bottom: 1px solid #785630;
       transform: rotate(45deg);
       transition: transform 0.3s;
       position: relative; top: -2px;
@@ -208,7 +208,7 @@
     .month[open] .arrow { transform: rotate(-135deg); top: 3px; }
 
     .days-panel {
-      background: #070403;
+      background: #070604;
       padding: 14px 16px 18px;
     }
 
@@ -240,19 +240,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid #1a0a04;
+      border: 1px solid #1a160c;
       border-radius: 3px;
       font-size: 0.7rem;
-      color: #5a3018;
-      background: #0c0603;
+      color: #5a4828;
+      background: #0c0a07;
       cursor: default;
       transition: all 0.15s;
       position: relative;
     }
 
     .d:hover {
-      border-color: #6a3818;
-      background: #120806;
+      border-color: #6a5228;
+      background: #100e08;
       color: #d4904a;
     }
 
@@ -261,7 +261,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: repeating-linear-gradient(90deg, transparent 0px, transparent 3px, #1a0a04 3px, #1a0a04 6px);
+      background: repeating-linear-gradient(90deg, transparent 0px, transparent 3px, #1a160c 3px, #1a160c 6px);
     }
 
     /* ── Dedicatorias ────────────────────────────────── */
@@ -272,10 +272,10 @@
     }
 
     .ded-card {
-      border: 1px solid #2a1208;
+      border: 1px solid #2a2010;
       border-radius: 4px;
       padding: 32px 28px;
-      background: #0c0603;
+      background: #0c0a07;
       position: relative;
       overflow: hidden;
     }
@@ -292,7 +292,7 @@
       font-size: 0.6rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #7a4020;
+      color: #785630;
       margin-bottom: 14px;
     }
 
@@ -310,14 +310,14 @@
       font-style: italic;
       font-size: 0.95rem;
       line-height: 1.9;
-      color: #7a5030;
+      color: #7a6040;
     }
 
     .ded-from {
       margin-top: 20px;
       font-size: 0.65rem;
       letter-spacing: 0.18em;
-      color: #4a2810;
+      color: #483618;
       text-transform: uppercase;
     }
 
@@ -330,10 +330,10 @@
     }
 
     .song-card {
-      border: 1px solid #2a1208;
+      border: 1px solid #2a2010;
       border-radius: 4px;
       overflow: hidden;
-      background: #0c0603;
+      background: #0c0a07;
     }
 
     .song-meta {
@@ -347,7 +347,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem;
       font-weight: 300;
-      color: #3a1808;
+      color: #382c14;
       min-width: 28px;
     }
 
@@ -363,7 +363,7 @@
     .song-artist {
       font-size: 0.65rem;
       letter-spacing: 0.1em;
-      color: #4a2810;
+      color: #483618;
     }
 
     .song-embed {
@@ -373,14 +373,14 @@
     /* Placeholder para canciones sin embed aún */
     .song-placeholder {
       height: 52px;
-      background: #080402;
-      border-top: 1px solid #1a0a04;
+      background: #080705;
+      border-top: 1px solid #1a160c;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.65rem;
       letter-spacing: 0.12em;
-      color: #2a1208;
+      color: #2a2010;
     }
 
     /* ── Galería ─────────────────────────────────────── */
@@ -394,8 +394,8 @@
       border-radius: 4px;
       overflow: hidden;
       aspect-ratio: 1;
-      background: #0c0603;
-      border: 1px solid #2a1208;
+      background: #0c0a07;
+      border: 1px solid #2a2010;
       position: relative;
     }
 
@@ -413,7 +413,7 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       padding: 10px 12px;
-      background: linear-gradient(transparent, rgba(5,2,1,0.85));
+      background: linear-gradient(transparent, rgba(4,4,2,0.85));
       font-size: 0.68rem;
       letter-spacing: 0.08em;
       color: #b89060;
@@ -432,9 +432,9 @@
       justify-content: center;
       font-size: 0.62rem;
       letter-spacing: 0.15em;
-      color: #2a1208;
+      color: #2a2010;
       text-transform: uppercase;
-      border: 1px dashed #1e0e06;
+      border: 1px dashed #1e1a0e;
       border-radius: 3px;
     }
 
@@ -442,10 +442,10 @@
     footer {
       text-align: center;
       padding: 38px 40px;
-      border-top: 1px solid #1a0a04;
+      border-top: 1px solid #1a160c;
       font-size: 0.65rem;
       letter-spacing: 0.25em;
-      color: #2a1208;
+      color: #2a2010;
       text-transform: uppercase;
     }
 
